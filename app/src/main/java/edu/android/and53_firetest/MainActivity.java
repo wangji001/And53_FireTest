@@ -31,6 +31,10 @@ public class MainActivity extends AppCompatActivity {
     private FirebaseDatabase database;  // 데이터베이스에 접근할 수 있는 진입점 클래스
     private DatabaseReference myRef;    // 데이터베이스의 주소 저장
 
+    // game 회차 저장
+    // 맨 처음 저장은 1회차이기 때문에 0 저장
+    public static int game_count ;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -131,12 +135,11 @@ public class MainActivity extends AppCompatActivity {
 
     } // end getData()
 
-
+    // 데이터 수정 버튼
     public void onClickUpdateData(View view) {
 
         String id = editId.getText().toString();
         String updateName = editName.getText().toString();
-
 
         Map<String, Object> updateMap = new HashMap<>();
         updateMap.put("/" + id + "/name",updateName);
@@ -147,7 +150,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void onClickCheckGame(View view) {
 
-        DatabaseReference gameRef = database.getReference("/" + "may" );
+        DatabaseReference gameRef = database.getReference( "Person"+ "/" + "may/game1" );
 
         //
         gameRef.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -155,15 +158,6 @@ public class MainActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 long count = dataSnapshot.getChildrenCount();
                 Log.i(TAG,"자식: " + count );
-
-                StringBuilder builder = new StringBuilder();
-                for (DataSnapshot snapShot : dataSnapshot.getChildren()) {
-                    Person person = snapShot.getValue(Person.class);
-                    String[] info = {person.getId(), person.getName(), person.getAge(), person.getEmail(), person.getPw(), String.valueOf(person.getScore1())};
-                    String result = info[0] + " - " + info[1] + " - " + info[2] + info[5]+"\n";
-                    builder.append(result);
-                    Log.i(TAG,""+result);
-                }
 
             }
 
@@ -173,5 +167,36 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 //        myRef.child("/" + ID + "/" + "game1")
+    }
+
+    public void onClickAddScore(View view) {
+        DatabaseReference gameRef = database.getReference( "Person"+ "/" + "may/game1" );
+
+        int score = Integer.parseInt(editGame.getText().toString());
+
+        Person person = new Person(score);
+
+        gameRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                long count = dataSnapshot.getChildrenCount();
+                Log.i(TAG,"자식: " + count );
+                game_count = (int) count;
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+
+        Map<String, Object> childToChildUpdate = new HashMap<>();
+        Map<String, Object> gameValues = person.toMapGame();
+
+        childToChildUpdate.put("/score " + (game_count ), gameValues);
+        gameRef.updateChildren(childToChildUpdate);
+
     }
 } // end class MainActivity

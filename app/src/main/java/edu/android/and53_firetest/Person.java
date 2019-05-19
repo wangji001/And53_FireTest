@@ -4,6 +4,7 @@ import com.google.firebase.database.Exclude;
 
 import java.util.HashMap;
 import java.util.Map;
+import static edu.android.and53_firetest.MainActivity.game_count;
 
 public class Person {
     private String id;
@@ -27,6 +28,10 @@ public class Person {
         this.pw = pw;
         this.pw2 = pw2;
         this.score1 = score1;
+    }
+
+    public Person(int scoreN){
+        this.score1 = scoreN ;
     }
 
 
@@ -118,7 +123,14 @@ public class Person {
     public Map<String, Object> toMapGame(){
         HashMap<String, Object> gameResult = new HashMap<>();
 
-        gameResult.put("score1", score1);
+        game_count = (game_count+1);
+
+        gameResult.put("score" + (game_count ), score1);
         return  gameResult;
     }
+//
+//    public Map<String, Object> toMapScore(){
+//        HashMap<String, Object> addScore = new HashMap<>();
+//        addScore.put("")
+//    }
 } // end class Person

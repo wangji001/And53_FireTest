@@ -84,31 +84,39 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="TextView" />
+
+            <Button
+                android:id="@+id/btnSaveData"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:onClick="onClickSaveData"
+                android:text="저장" />
+
+            <Button
+                android:id="@+id/btnAddScore"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:onClick="onClickAddScore"
+                android:text="게임 점수 추가" />
+
+            <Button
+                android:id="@+id/btnUpdateData"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:onClick="onClickUpdateData"
+                android:text="업데이트" />
+
+            <Button
+                android:id="@+id/btnGetData"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:onClick="onClickCheckGame"
+                android:text="가져오기" />
         </LinearLayout>
     </ScrollView>
-
-    <Button
-        android:id="@+id/btnSaveData"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="8dp"
-        android:onClick="onClickSaveData"
-        android:text="저장" />
-
-    <Button
-        android:id="@+id/btnUpdateData"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="8dp"
-        android:onClick="onClickUpdateData"
-        android:text="업데이트" />
-
-    <Button
-        android:id="@+id/btnGetData"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="8dp"
-        android:onClick="onClickCheckGame"
-        android:text="가져오기" />
 
 </LinearLayout>
