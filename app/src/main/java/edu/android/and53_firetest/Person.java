@@ -119,7 +119,7 @@ public class Person {
     public Map<String, Object> toMapGame(){
         HashMap<String, Object> gameResult = new HashMap<>();
 
-        gameResult.put("1회차", score_1);
+        gameResult.put("score1", score_1);
         return  gameResult;
     }
 } // end class Person

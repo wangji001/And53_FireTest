@@ -52,7 +52,7 @@ public class MainActivity extends AppCompatActivity {
     } // end onCreate()
 
     private Person.Game_1 saveGameScore(String score){
-       ;
+
         Person.Game_1 game1 = new Person.Game_1(score);
         return game1;
 
@@ -76,6 +76,8 @@ public class MainActivity extends AppCompatActivity {
 
         childToChildUpdate.put("/" + ID + "/" + "game1/", gameValues);
         myRef.updateChildren(childToChildUpdate);
+
+//        myRef.child("/"+ID+"/game1"+)
 
 
     } // end writeNewPerson()
