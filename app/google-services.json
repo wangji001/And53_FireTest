@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "789668104932-l47oq75khpgbtffd3kja9p9mv44k2ej9.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "edu.android.and53_firetest",
+            "certificate_hash": "019c966a95c2a128159394a56a8b9b606f39bcc2"
+          }
+        },
+        {
           "client_id": "789668104932-1583fmmo3hki84isdc2p2e7716tpbvkn.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {

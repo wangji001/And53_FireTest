@@ -13,16 +13,31 @@ public class Person {
     private String pw;
     private String pw2;
 
+
+
+    private Game_1 score_1;
+
     public Person(){}
 
-    public Person(String id, String name, String age, String email, String pw, String pw2) {
+    public Person(String id, String name, String age, String email, String pw, String pw2, Game_1 score_1) {
         this.id = id;
         this.name = name;
         this.age = age;
         this.email = email;
         this.pw = pw;
         this.pw2 = pw2;
+        this.score_1 = score_1;
     }
+
+     static class Game_1{
+        String score;
+
+         public Game_1(String score) {
+             this.score = score;
+         }
+     }
+
+
 
     public String getId() {
         return id;
@@ -72,6 +87,7 @@ public class Person {
         this.pw2 = pw2;
     }
 
+
     @Override
     public String toString() {
         return "Person{" +
@@ -81,6 +97,7 @@ public class Person {
                 ", email='" + email + '\'' +
                 ", pw='" + pw + '\'' +
                 ", pw2='" + pw2 + '\'' +
+
                 '}';
     }
 
@@ -97,5 +114,12 @@ public class Person {
         result.put("pw", pw);
         result.put("pw2", pw2);
         return result;
+    }
+
+    public Map<String, Object> toMapGame(){
+        HashMap<String, Object> gameResult = new HashMap<>();
+
+        gameResult.put("1회차", score_1);
+        return  gameResult;
     }
 } // end class Person

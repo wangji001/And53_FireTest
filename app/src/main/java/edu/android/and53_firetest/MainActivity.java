@@ -24,7 +24,7 @@ public class MainActivity extends AppCompatActivity {
 
     private static String ID;
 
-    private EditText editName, editAge, editId, editEmail, editPw, editPw2;
+    private EditText editName, editAge, editId, editEmail, editPw, editPw2, editGame;
     private TextView textView;
 
     private FirebaseDatabase database;  // 데이터베이스에 접근할 수 있는 진입점 클래스
@@ -42,6 +42,7 @@ public class MainActivity extends AppCompatActivity {
         editEmail = findViewById(R.id.editEmail);
         editPw = findViewById(R.id.editPw);
         editPw2 = findViewById(R.id.editPw2);
+        editGame = findViewById(R.id.editGame);
 
         database = FirebaseDatabase.getInstance();  // 현재 데이터 베이스를 접근할 수 있는 진입점
         // Person의 child로 이동
@@ -50,17 +51,32 @@ public class MainActivity extends AppCompatActivity {
 
     } // end onCreate()
 
+    private Person.Game_1 saveGameScore(String score){
+       ;
+        Person.Game_1 game1 = new Person.Game_1(score);
+        return game1;
+
+    }
+
 
     // 데이터 저장 메소드
     private void writeNewPerson(String userId, String name, String age, String email, String pw, String pw2){
-
-        Person person = new Person(ID, name, age, email, pw, pw2);
+        String score = editGame.getText().toString();
+        Person.Game_1 game_1 = saveGameScore(score);
+        Person person = new Person(ID, name, age, email, pw, pw2, game_1);
 
         Map<String, Object> childUpdates = new HashMap<>();
         Map<String, Object> postValues = person.toMap();
 
         childUpdates.put("/" + ID + "/", postValues);
         myRef.updateChildren(childUpdates);
+
+        Map<String, Object> childToChildUpdate = new HashMap<>();
+        Map<String, Object> gameValues = person.toMapGame();
+
+        childToChildUpdate.put("/" + ID + "/" + "game1/", gameValues);
+        myRef.updateChildren(childToChildUpdate);
+
 
     } // end writeNewPerson()
 
@@ -98,7 +114,7 @@ public class MainActivity extends AppCompatActivity {
                 Person person = null;
                 for (DataSnapshot snapShot : dataSnapshot.getChildren()) {
                     person = snapShot.getValue(Person.class);
-                    String[] info = {person.getId(), person.getName(), person.getAge()};
+                    String[] info = {person.getId(), person.getName(), person.getAge(), person.getEmail(), person.getPw()};
                     String result = info[0] + " - " + info[1] + " - " + info[2] + "\n";
                     builder.append(result);
                 }
