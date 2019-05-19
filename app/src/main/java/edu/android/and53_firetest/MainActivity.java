@@ -1,5 +1,6 @@
 package edu.android.and53_firetest;
 
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -51,19 +52,13 @@ public class MainActivity extends AppCompatActivity {
 
     } // end onCreate()
 
-    private Person.Game_1 saveGameScore(String score){
-
-        Person.Game_1 game1 = new Person.Game_1(score);
-        return game1;
-
-    }
 
 
     // 데이터 저장 메소드
-    private void writeNewPerson(String userId, String name, String age, String email, String pw, String pw2){
-        String score = editGame.getText().toString();
-        Person.Game_1 game_1 = saveGameScore(score);
-        Person person = new Person(ID, name, age, email, pw, pw2, game_1);
+    private void writeNewPerson(String userId, String name, String age, String email, String pw, String pw2, int score){
+
+
+        Person person = new Person(ID, name, age, email, pw, pw2, score);
 
         Map<String, Object> childUpdates = new HashMap<>();
         Map<String, Object> postValues = person.toMap();
@@ -77,7 +72,7 @@ public class MainActivity extends AppCompatActivity {
         childToChildUpdate.put("/" + ID + "/" + "game1/", gameValues);
         myRef.updateChildren(childToChildUpdate);
 
-//        myRef.child("/"+ID+"/game1"+)
+
 
 
     } // end writeNewPerson()
@@ -92,11 +87,12 @@ public class MainActivity extends AppCompatActivity {
 
         String pw = editPw.getText().toString();
         String pw2 = editPw2.getText().toString();
+        int score = Integer.parseInt(editGame.getText().toString());
 
         if (pw.equals(pw2)) {
 
             // 저장 메소드 호출
-            writeNewPerson(ID, name, age, email, pw, pw2);
+            writeNewPerson(ID, name, age, email, pw, pw2, score);
         } else {
             Toast.makeText(this, "비밀번호 다릅니다", Toast.LENGTH_SHORT).show();
         }
@@ -105,6 +101,8 @@ public class MainActivity extends AppCompatActivity {
         editName.setText("");
         editAge.setText("");
     } // end saveData()
+
+
 
     // 데이터 가져오기 버튼
     public void onClickGetData(View view) {
@@ -146,4 +144,34 @@ public class MainActivity extends AppCompatActivity {
 
 
     } // end onClickUpdateData()
+
+    public void onClickCheckGame(View view) {
+
+        DatabaseReference gameRef = database.getReference("/" + "may" );
+
+        //
+        gameRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                long count = dataSnapshot.getChildrenCount();
+                Log.i(TAG,"자식: " + count );
+
+                StringBuilder builder = new StringBuilder();
+                for (DataSnapshot snapShot : dataSnapshot.getChildren()) {
+                    Person person = snapShot.getValue(Person.class);
+                    String[] info = {person.getId(), person.getName(), person.getAge(), person.getEmail(), person.getPw(), String.valueOf(person.getScore1())};
+                    String result = info[0] + " - " + info[1] + " - " + info[2] + info[5]+"\n";
+                    builder.append(result);
+                    Log.i(TAG,""+result);
+                }
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+//        myRef.child("/" + ID + "/" + "game1")
+    }
 } // end class MainActivity

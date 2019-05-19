@@ -12,30 +12,22 @@ public class Person {
     private String email;
     private String pw;
     private String pw2;
+    private int score1;
 
 
 
-    private Game_1 score_1;
 
     public Person(){}
 
-    public Person(String id, String name, String age, String email, String pw, String pw2, Game_1 score_1) {
+    public Person(String id, String name, String age, String email, String pw, String pw2, int score1) {
         this.id = id;
         this.name = name;
         this.age = age;
         this.email = email;
         this.pw = pw;
         this.pw2 = pw2;
-        this.score_1 = score_1;
+        this.score1 = score1;
     }
-
-     static class Game_1{
-        String score;
-
-         public Game_1(String score) {
-             this.score = score;
-         }
-     }
 
 
 
@@ -87,6 +79,13 @@ public class Person {
         this.pw2 = pw2;
     }
 
+    public int getScore1() {
+        return score1;
+    }
+
+    public void setScore1(int score1) {
+        this.score1 = score1;
+    }
 
     @Override
     public String toString() {
@@ -119,7 +118,7 @@ public class Person {
     public Map<String, Object> toMapGame(){
         HashMap<String, Object> gameResult = new HashMap<>();
 
-        gameResult.put("score1", score_1);
+        gameResult.put("score1", score1);
         return  gameResult;
     }
 } // end class Person
